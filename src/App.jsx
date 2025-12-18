@@ -27,19 +27,25 @@ const App = () => {
   return (
     <div className="app">
       <h1>To-Do List</h1>
-      <div className="input-box">
+      <form
+        className="input-box"
+        onSubmit={(e) => {
+          e.preventDefault();
+          addTodo();
+        }}
+      >
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Add a task..."
         />
-        <button onClick={addTodo}>Add</button>
-      </div>
+        <button type="submit">Add</button>
+      </form>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id} className={todo.completed ? "done" : ""}>
             <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button onClick={() => deleteTodo(todo.id)}>❌</button>
           </li>
         ))}
       </ul>
