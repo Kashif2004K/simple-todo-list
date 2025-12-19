@@ -4,6 +4,17 @@ import "./App.css";
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedtheme = localStorage.getItem("theme");
+    if (savedtheme === "dark") setDarkMode(savedtheme);
+  }, []);
+
+  useEffect(() => {
+    document.body.className = darkMode ? "dark" : "";
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const addTodo = () => {
     if (!input.trim()) return;
@@ -27,6 +38,9 @@ const App = () => {
   return (
     <div className="app">
       <h1>To-Do List</h1>
+      <button className="theme-btn" onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      </button>
       <form
         className="input-box"
         onSubmit={(e) => {
